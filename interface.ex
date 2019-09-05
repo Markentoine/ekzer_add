@@ -14,4 +14,6 @@ defmodule EkzerAdd.Interface do
     def get_exercises_pids(adder_pid), do: Adder.get_exercises_pids(adder_pid)
 
     def get_exercise_value(exercise_pid, value), do: Exercice.get_exercise_value(exercise_pid, value)
+
+    def add_common_infos(exercise_pid, params), do: Exercice.add_common_infos(exercise_pid, params)
 end

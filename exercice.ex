@@ -21,6 +21,11 @@ defmodule EkzerAdd.Exercice do
         {:ok, result}
     end
 
+    def add_common_infos(exercice_pid, params) do
+        GenServer.cast(exercice_pid, {:add, params})
+        {:ok, :success}
+    end
+
     #CALLBACKS
 
     def init(type) do
@@ -36,6 +41,18 @@ defmodule EkzerAdd.Exercice do
     def handle_call({:get, value}, _from, state) do
         result = Map.get(state, value)
         {:reply, result, state}
+    end
+
+    def handle_cast({:add, params}, state) do
+        common_fields = %{"level" => level,
+          "progression" => progression,
+          "field" => field,
+          "objectives" => objectives,
+          "keywords" => keywords,
+          "consigne" => consigne
+        } = params
+        new_state = Map.put(state, :common_fields, common_fields)
+        {:noreply, new_state}
     end
 
     #HELPERS
