@@ -22,7 +22,12 @@ defmodule EkzerAdd.Exercice do
     end
 
     def add_common_infos(exercice_pid, params) do
-        GenServer.cast(exercice_pid, {:add, params})
+        GenServer.cast(exercice_pid, {:add_common, params})
+        {:ok, :success}
+    end
+
+    def add_specific_infos(exercise_pid, type, infos) do
+        GenServer.cast(exercise_pid, {:add_specific, type, infos})
         {:ok, :success}
     end
 
@@ -43,7 +48,7 @@ defmodule EkzerAdd.Exercice do
         {:reply, result, state}
     end
 
-    def handle_cast({:add, params}, state) do
+    def handle_cast({:add_common, params}, state) do
         common_fields = %{"level" => level,
           "progression" => progression,
           "field" => field,
@@ -52,6 +57,11 @@ defmodule EkzerAdd.Exercice do
           "consigne" => consigne
         } = params
         new_state = Map.put(state, :common_fields, common_fields)
+        {:noreply, new_state}
+    end
+
+    def handle_cast({:add_specific, "classer", infos}, state) do
+        new_state = Map.put(state.specific_fields, :colonnes, infos)
         {:noreply, new_state}
     end
 
