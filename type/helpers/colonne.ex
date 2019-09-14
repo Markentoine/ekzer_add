@@ -1,3 +1,3 @@
 defmodule EkzerAdd.Type.Helpers.Colonne do
-    defstruct name: nil, contenu: []
+  defstruct name: nil, contenu: []
 end
