@@ -11,6 +11,11 @@ defmodule EkzerAdd.Exercice do
 
   def new_exercise(type), do: start_link(type)
 
+  def get_state(pid) do
+    state = GenServer.call(pid, :state)
+   {:ok, state}
+  end
+ 
   def get_entries(exercise_pid) do
     entries = GenServer.call(exercise_pid, :entries)
     {:ok, entries}
@@ -38,6 +43,11 @@ defmodule EkzerAdd.Exercice do
     {:ok, initial_state}
   end
 
+  def handle_call(:state, _from, state) do
+    {:reply, state, state}
+  end
+
+
   def handle_call(:entries, _from, state) do
     [_head | entries] = Map.keys(state)
     {:reply, entries, state}
@@ -64,7 +74,8 @@ defmodule EkzerAdd.Exercice do
   end
 
   def handle_cast({:add_specific, :classer, infos}, state) do
-    new_state = Map.put(state.specific_fields, :colonnes, infos)
+    specific_fields = Map.put(state.specific_fields, :colonnes, infos)
+    new_state = Map.put(state, :specific_fields, specific_fields)
     {:noreply, new_state}
   end
 
