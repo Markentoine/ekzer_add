@@ -13,9 +13,9 @@ defmodule EkzerAdd.Exercice do
 
   def get_state(pid) do
     state = GenServer.call(pid, :state)
-   {:ok, state}
+    {:ok, state}
   end
- 
+
   def get_entries(exercise_pid) do
     entries = GenServer.call(exercise_pid, :entries)
     {:ok, entries}
@@ -47,7 +47,6 @@ defmodule EkzerAdd.Exercice do
     {:reply, state, state}
   end
 
-
   def handle_call(:entries, _from, state) do
     [_head | entries] = Map.keys(state)
     {:reply, entries, state}
@@ -59,16 +58,10 @@ defmodule EkzerAdd.Exercice do
   end
 
   def handle_cast({:add_common, params}, state) do
-    common_fields =
-      %{
-        "level" => level,
-        "progression" => progression,
-        "field" => field,
-        "objectives" => objectives,
-        "keywords" => keywords,
-        "consigne" => consigne
-      } = params
-
+    common_fields = Enum.reduce(params, state.common_fields, fn {key, value}, acc -> 
+        atom_p = String.to_atom(key)
+        %{acc | atom_p => value}
+    end)
     new_state = Map.put(state, :common_fields, common_fields)
     {:noreply, new_state}
   end
