@@ -59,10 +59,11 @@ defmodule EkzerAdd.Exercice do
 
   def handle_cast({:add_common, params}, state) do
     common_fields = Enum.reduce(params, state.common_fields, fn {key, value}, acc -> 
-        atom_p = String.to_atom(key)
-        %{acc | atom_p => value}
+        atom_key = String.to_atom(key)
+        %{ acc | atom_key => value }
     end)
     new_state = Map.put(state, :common_fields, common_fields)
+    IO.inspect new_state
     {:noreply, new_state}
   end
 
