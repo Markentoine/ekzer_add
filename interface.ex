@@ -2,7 +2,7 @@ defmodule EkzerAdd.Interface do
   alias EkzerAdd.{Exercice, Adder}
 
   def start_add() do
-    {:ok, _pid} = EkzerAdd.Supervisor.start_child()
+    {:ok, pid} = EkzerAdd.Supervisor.start_child()
   end
 
   def create_exercise(type), do: EkzerAdd.Exercice.new_exercise(type)
