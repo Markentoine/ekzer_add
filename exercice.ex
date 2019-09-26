@@ -58,26 +58,27 @@ defmodule EkzerAdd.Exercice do
   end
 
   def handle_cast({:add_common, params}, state) do
-    common_fields = Enum.reduce(params, state.common_fields, fn {key, value}, acc -> 
+    common_fields =
+      Enum.reduce(params, state.common_fields, fn {key, value}, acc ->
         atom_key = String.to_atom(key)
-        %{ acc | atom_key => value }
-    end)
+        %{acc | atom_key => value}
+      end)
+
     new_state = Map.put(state, :common_fields, common_fields)
-    IO.inspect new_state
+    IO.inspect(new_state)
     {:noreply, new_state}
   end
 
-  
   def handle_cast({:add_specific, :quizz, infos}, state) do
     questions = state.specific_fields.questions
-    new_questions = [ infos | questions ]
+    new_questions = [infos | questions]
     specific_fields = Map.put(state.specific_fields, :questions, new_questions)
     new_state = Map.put(state, :specific_fields, specific_fields)
     {:noreply, new_state}
   end
-  
+
   def handle_cast({:add_specific, _type, infos}, state) do
-    colonnes = Map.put(state.specific_fields, :colonnes, infos)
+    colonnes = Map.put(state.specific_fields, :specific_infos, infos)
     new_state = Map.put(state, :specific_fields, colonnes)
     {:noreply, new_state}
   end
