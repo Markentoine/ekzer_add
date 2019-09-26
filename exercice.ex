@@ -89,6 +89,11 @@ defmodule EkzerAdd.Exercice do
     {:noreply, new_state}
   end
 
+  def handle_cast({:add_specific, :prelever, infos}, state) do
+    new_state = Map.put(state, :specific_fields, infos)
+    {:noreply, new_state}
+  end
+
   # HELPERS
 
   defp exercice_type(:completer) do
