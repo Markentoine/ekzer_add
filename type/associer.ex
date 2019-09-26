@@ -9,5 +9,5 @@ defmodule EkzerAdd.Type.Associer do
               objectives: [],
               keywords: []
             },
-            specific_fields: %{proposition: nil, predicat: nil}
+            specific_fields: []
 end
