@@ -93,7 +93,7 @@ defmodule EkzerAdd.Exercice do
     new_state = Map.put(state, :specific_fields, infos)
     {:noreply, new_state}
   end
-  
+
   # HELPERS
 
   defp exercice_type(:completer) do
