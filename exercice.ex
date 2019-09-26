@@ -77,9 +77,15 @@ defmodule EkzerAdd.Exercice do
     {:noreply, new_state}
   end
 
-  def handle_cast({:add_specific, _type, infos}, state) do
+  def handle_cast({:add_specific, :classer, infos}, state) do
     colonnes = Map.put(state.specific_fields, :specific_infos, infos)
-    new_state = Map.put(state, :specific_fields, colonnes)
+    new_state = Map.put(state, :colonnes, colonnes)
+    {:noreply, new_state}
+  end
+
+  def handle_cast({:add_specific, :associer, infos}, state) do
+    propositions = Map.put(state.specific_fields, :specific_infos, infos)
+    new_state = Map.put(state, :propositions, propositions)
     {:noreply, new_state}
   end
 
